@@ -163,6 +163,33 @@ class App extends Component {
       .then(response => response.json())
       .then(jsonData => this.setState({detailFighter: jsonData}))
   }
+
+  handleDeleteFighter = () => {
+    console.log(`deleting fighter`)
+    const data = this.state.detailFighter
+
+    const index = this.state.allFighters.indexOf(this.state.detailFighter);
+    console.log(index)
+    console.log(this.state.allFighters[index])
+
+    fetch(`http://localhost:3000/deleteFighter`,
+      { 
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{'Content-Type': 'application/json'}
+      })
+      .then(response => response.json())
+      .then(jsonData => {
+        const newAllFighters = this.state.allFighters
+        newAllFighters.splice(index, 1),
+        this.setState({
+          allFighters: newAllFighters,
+          detailFighter: null
+          
+        })
+    })
+  }
+
   /************* End of Event Handlers *************/
   
 
@@ -174,9 +201,10 @@ class App extends Component {
 
         {this.state.detailFighter ? 
           <DetailFighter 
-            handleReturnToAllFighters={this.handleReturnToAllFighters} 
             fighter={this.state.detailFighter}
-            handleEditFighter={this.handleEditFighter} /> : 
+            handleReturnToAllFighters={this.handleReturnToAllFighters} 
+            handleEditFighter={this.handleEditFighter}
+            handleDeleteFighter={this.handleDeleteFighter} /> : 
 
           <React.Fragment>
             <NewFighterForm handleSubmit={this.handleCreateNewFighter} />

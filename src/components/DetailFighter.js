@@ -27,6 +27,7 @@ class DetailFighter extends Component {
                         <p>Fighter Status: {fighter_status === "Active" ? "Active" : "Not Active"} </p>
                         <button onClick={this.props.handleReturnToAllFighters}>All Fighters</button>
                         <button onClick={() => this.setState({clickedEdit: !this.state.clickedEdit})}>Edit Fighter</button>
+                        <button onClick={this.props.handleDeleteFighter} >Delete Fighter</button>
                     </div>
                 </div>
 
